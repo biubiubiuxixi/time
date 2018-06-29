@@ -1,0 +1,80 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+            font-size: 16px;
+            text-align: center;
+            display: flex;
+            -webkit-box-direction: column;
+            -moz-box-direction: column;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+
+        #timeshow {
+            font-size: 20em;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="timeshow"></div>
+    <script type="text/javascript">
+        var hourtime = prompt("输入倒计时的时间，如下： ", "24:00:00");
+        var timeArr = hourtime.split(':');
+        var hourArr = parseInt(timeArr[0], 10);
+        var minArr = parseInt(timeArr[1], 10);
+        var secArr = parseInt(timeArr[2], 10);
+        if (hourArr >= 24) {
+            hourArr = 23;
+            minArr = 59;
+            secArr = 59;
+        }
+        var time = new Date();
+        time.setHours(hourArr);
+        time.setMinutes(minArr);
+        time.setSeconds(secArr);
+        var timeout;
+        var timeshow = document.getElementById("timeshow");
+
+        function countdown() {
+            var hour = time.getHours();
+            var min = time.getMinutes();
+            var second = time.getSeconds();
+            if (hour == "0" && min == "0" && second == "0") {
+                alert("Time Out!");
+                clearInterval(timeout);
+            }
+            time.setSeconds(second - 1);
+            hour < 10 ? hour = "0" + hour : hour;
+            min < 10 ? min = "0" + min : min;
+            second < 10 ? second = "0" + second : second;
+            timeshow.innerHTML = hour + ":" + min + ":" + second;
+        }
+        countdown();
+        timeout = setInterval(countdown, 1000);
+        var flag = true;
+        document.onclick=function(){
+            console.log(timeout);
+            if(flag === true) {
+                clearInterval(timeout);
+                flag = false;
+            } else {
+                countdown();
+                timeout = setInterval(countdown, 1000);
+                flag = true;
+            }
+        }
+    </script>
+</body>
+
+</html>

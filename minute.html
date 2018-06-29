@@ -1,0 +1,75 @@
+<html>
+
+<head>
+    <style>
+        body {
+            background-color: black;
+            font-size: 16px;
+            text-align: center;
+            display: flex;
+            -webkit-box-direction: column;
+            -moz-box-direction: column;
+            -webkit-flex-direction: column;
+            -ms-flex-direction: column;
+            flex-direction: column;
+            -webkit-box-pack: center;
+            -moz-box-pack: center;
+            -ms-flex-pack: center;
+            -webkit-justify-content: center;
+            justify-content: center;
+        }
+
+        #timeshow {
+            font-size: 40em;
+            color: white;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="timeshow"></div>
+    <script type="text/javascript">
+        var hourtime = prompt("输入倒计时的时间，如下： ", "0500");
+        console.log(hourtime);
+        var minArr = parseInt(hourtime.slice(0,2), 10);
+        var secArr = parseInt(hourtime.slice(2,4), 10);
+        if (minArr >= 60) {
+            minArr = 59;
+            secArr = 59;
+        }
+        var time = new Date();
+        time.setMinutes(minArr);
+        time.setSeconds(secArr);
+        var timeout;
+        var timeshow = document.getElementById("timeshow");
+
+        function countdown() {
+            var min = time.getMinutes();
+            var second = time.getSeconds();
+            if (min == "0" && second == "0") {
+                clearInterval(timeout);
+                timeshow.innerHTML = "00:00";
+            }
+            time.setSeconds(second - 1);
+            min < 10 ? min = "0" + min : min;
+            second < 10 ? second = "0" + second : second;
+            timeshow.innerHTML = min + ":" + second;
+        }
+        countdown();
+        timeout = setInterval(countdown, 1000);
+        var flag = true;
+        document.onclick=function(){
+            console.log(timeout);
+            if(flag === true) {
+                clearInterval(timeout);
+                flag = false;
+            } else {
+                countdown();
+                timeout = setInterval(countdown, 1000);
+                flag = true;
+            }
+        }
+    </script>
+</body>
+
+</html>
